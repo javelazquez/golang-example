@@ -1,4 +1,4 @@
-package credential
+package credentials
 
 import (
 	"context"
@@ -16,18 +16,23 @@ type credentialAWS struct {
 }
 
 func NewCredential(ctx context.Context, cfg ConfigCredential) (Credential, error) {
-	aswConfig, err := config.LoadDefaultConfig(ctx,
+	awsCredential, err := config.LoadDefaultConfig(ctx,
 		config.WithRegion(cfg.AWSRegion),
 		config.WithCredentialsProvider(credentials.NewStaticCredentialsProvider(
 			cfg.AWSAccessKey,
 			cfg.AWSSecretKey,
 			"")),
 	)
+
+	/*awsCredential, err := New(ctx,
+	WithEndpoint(cfg.AWSEndpoint),
+	WithRegion(cfg.AWSRegion),
+	WithRole(cfg.RoleARN))*/
 	if err != nil {
 		return &credentialAWS{}, err
 	}
 	return &credentialAWS{
-		awsConfig: aswConfig,
+		awsConfig: awsCredential,
 	}, err
 }
 

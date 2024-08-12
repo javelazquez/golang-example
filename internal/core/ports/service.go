@@ -7,6 +7,6 @@ import (
 )
 
 type PayoutService interface {
-	Create(ctx context.Context, payout command.CreatePayout) error
-	Get(ctx context.Context, id string) (domain.Payout, error)
+	Create(ctx context.Context, payout command.CreatePayout) (string, error)
+	Get(ctx context.Context, request command.GetPayout) (domain.Payout, error)
 }

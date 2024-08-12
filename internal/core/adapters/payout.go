@@ -1,4 +1,4 @@
-package repositories
+package adapters
 
 import (
 	"context"
@@ -6,19 +6,19 @@ import (
 	"golang-example/pkg/kvs"
 )
 
-type PayoutRepository struct {
+type payoutRepository struct {
 	storage kvs.KVS
 }
 
-func NewPayoutRepository(storage kvs.KVS) *PayoutRepository {
-	return &PayoutRepository{storage: storage}
+func NewPayoutRepository(storage kvs.KVS) *payoutRepository {
+	return &payoutRepository{storage: storage}
 }
 
-func (p PayoutRepository) Save(ctx context.Context, payout domain.Payout) error {
+func (p payoutRepository) Save(ctx context.Context, payout domain.Payout) error {
 	return p.storage.Save(ctx, payout)
 }
 
-func (p PayoutRepository) Get(ctx context.Context, id string) (domain.Payout, error) {
+func (p payoutRepository) Get(ctx context.Context, id string) (domain.Payout, error) {
 	payout := domain.Payout{}
 	key := make(map[string]any)
 	key["id"] = id

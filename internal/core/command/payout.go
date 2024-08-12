@@ -1,10 +1,8 @@
 package command
 
-import "github.com/shopspring/decimal"
-
 type CreatePayout interface {
 	GetExternalID() string
-	GetAmount() decimal.Decimal
+	GetAmount() float64
 	GetCountry() string
 	GetMerchantID() string
 	GetCurrency() string

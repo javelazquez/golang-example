@@ -1,20 +1,18 @@
 package model
 
-import "github.com/shopspring/decimal"
-
 type CreatePayoutRequest struct {
-	ExternalID string          `json:"external_id"`
-	Amount     decimal.Decimal `json:"amount"`
-	MerchantID string          `json:"merchant_id"`
-	Country    string          `json:"country"`
-	Currency   string          `json:"currency"`
+	ExternalID string  `json:"external_id"`
+	Amount     float64 `json:"amount"`
+	MerchantID string  `json:"merchant_id"`
+	Country    string  `json:"country"`
+	Currency   string  `json:"currency"`
 }
 
 func (c CreatePayoutRequest) GetExternalID() string {
 	return c.ExternalID
 }
 
-func (c CreatePayoutRequest) GetAmount() decimal.Decimal {
+func (c CreatePayoutRequest) GetAmount() float64 {
 	return c.Amount
 }
 

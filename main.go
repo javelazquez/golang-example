@@ -3,12 +3,12 @@ package main
 import (
 	"context"
 	"fmt"
-	"golang-example/internal/core/repositories"
+	"golang-example/internal/core/adapters"
 	"golang-example/internal/core/services"
 	"golang-example/internal/entrypoint/http"
 	"golang-example/internal/entrypoint/http/handler"
 	"golang-example/pkg/apm"
-	"golang-example/pkg/credential"
+	"golang-example/pkg/credentials"
 	"golang-example/pkg/kvs"
 	"golang-example/pkg/server"
 	"time"
@@ -26,10 +26,11 @@ func main() {
 		ShutdownTimeout: 10 * time.Second,
 	}
 
-	configCredential := credential.ConfigCredential{
-		AWSRegion:    "ARG",
-		AWSAccessKey: "TEST",
-		AWSSecretKey: "TEST-KEY",
+	configCredential := credentials.ConfigCredential{
+		AWSRegion:    "eu-west-1",
+		AWSAccessKey: "user-test",
+		AWSSecretKey: "pass-test",
+		RoleARN:      "",
 	}
 
 	//pkg
@@ -38,21 +39,22 @@ func main() {
 		fmt.Println("se rompio newrelic", err)
 	}
 
-	credentialAWS, err := credential.NewCredential(ctx, configCredential)
+	credentialAWS, err := credentials.NewCredential(ctx, configCredential)
 	if err != nil {
-		fmt.Println("se rompio credential", err)
+		fmt.Println("se rompio credentials", err)
 	}
 
 	configKVS := kvs.Config{
-		TableName:  "payout_table",
-		Credential: credentialAWS,
+		TableName:   "payout_table",
+		Credential:  credentialAWS,
+		AWSEndpoint: "http://localhost:4566",
 	}
 
 	storageKVS := kvs.NewDynamoKVS(configKVS)
 	webServer := server.NewWebServer(ctx, configServer, nr)
 
 	//Repositories
-	payoutRepository := repositories.NewPayoutRepository(storageKVS)
+	payoutRepository := adapters.NewPayoutRepository(storageKVS)
 
 	//Services
 	payoutService := services.NewPayoutService(payoutRepository)

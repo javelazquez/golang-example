@@ -1,8 +1,9 @@
 package kvs
 
-import "golang-example/pkg/credential"
+import "golang-example/pkg/credentials"
 
 type Config struct {
-	TableName  string `env:"TABLE_NAME_PROJECTION"`
-	Credential credential.Credential
+	TableName   string `env:"PAYOUT_TABLE"`
+	AWSEndpoint string `env:"AWS_ENDPOINT"`
+	Credential  credentials.Credential
 }
