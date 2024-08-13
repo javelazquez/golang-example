@@ -47,3 +47,9 @@ get-by-dynamo-id:
     --table-name payout_table \
     --key '{"id": {"S": "6a9efb88-6c5c-484d-a35a-7deeed5b0526"}}' \
     --endpoint-url=http://localhost:4566
+
+run:
+	go run main.go
+
+tests:
+	go test ./...

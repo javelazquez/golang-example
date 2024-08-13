@@ -53,7 +53,7 @@ func (d *dynamoKVS) GetItem(ctx context.Context, keys map[string]any, m interfac
 	}
 
 	if result.Item == nil {
-		return appErrors.NewNotFoundError(fmt.Sprintf("item not found: %s", keys))
+		return nil
 	}
 
 	err = attributevalue.UnmarshalMap(result.Item, m)
