@@ -14,8 +14,8 @@ type payoutService struct {
 	repository ports.PayoutRepository
 }
 
-func NewPayoutService(repository ports.PayoutRepository) *payoutService {
-	return &payoutService{repository: repository}
+func NewPayoutService(repository ports.PayoutRepository) payoutService {
+	return payoutService{repository: repository}
 }
 
 func (p payoutService) Create(ctx context.Context, pr command.CreatePayout) (string, error) {

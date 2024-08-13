@@ -16,6 +16,7 @@ func NewPayoutRepository(storage kvs.KVS) *payoutRepository {
 
 func (p payoutRepository) Save(ctx context.Context, payout domain.Payout) error {
 	return p.storage.Save(ctx, payout)
+	//return p.storage.SaveConditional(ctx, payout)
 }
 
 func (p payoutRepository) Get(ctx context.Context, id string) (domain.Payout, error) {
