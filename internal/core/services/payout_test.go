@@ -65,10 +65,8 @@ func (m *MockUIDGen) NewID() string {
 func TestPayoutService_Create_Success(t *testing.T) {
 	ctx := context.Background()
 	mockRepo := new(MockPayoutRepository)
-	//mockUIDGen := new(MockUIDGen)
 	service := services.NewPayoutService(mockRepo)
 
-	//payoutIdExpected := "payout-id-00"
 	request := MockRequest{
 		ExternalID: "external_test_1",
 		Amount:     100,
@@ -77,26 +75,12 @@ func TestPayoutService_Create_Success(t *testing.T) {
 		Currency:   "ARS",
 	}
 
-	/*payout := domain.Payout{
-		Id:         payoutIdExpected,
-		ExternalID: request.GetExternalID(),
-		Amount:     request.GetAmount(),
-		MerchantID: request.GetMerchantID(),
-		Country:    request.GetCountry(),
-		Currency:   request.GetCurrency(),
-		Status:     "CREATED",
-	}*/
-
-	//mockUIDGen.On("NewID").Return(payoutIdExpected)
 	mockRepo.On("Save", ctx, mock.Anything).Return(nil)
 
 	_, err := service.Create(ctx, request)
 
 	mockRepo.AssertCalled(t, "Save", ctx, mock.Anything)
-	//mockUIDGen.AssertCalled(t, "New")
 	mockRepo.AssertExpectations(t)
-	//mockUIDGen.AssertExpectations(t)
 
 	assert.NoError(t, err)
-	//assert.Equal(t, payoutIdExpected, payoutID)
 }
